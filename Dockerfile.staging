@@ -20,7 +20,7 @@ RUN echo ${STAGING_BRANCH_NAME}
 RUN git clone -b $STAGING_BRANCH_NAME https://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@github.com/alexandermamaniyucra/devops-sec-house-billing-rest-service.git
 
 # Create and set working directory
-RUN mkdir -p /devops-sec-house-billing-rest-service
+RUN mkdir -p /devops-sec-house-billing-rest-service/static
 
 
 WORKDIR /devops-sec-house-billing-rest-service
