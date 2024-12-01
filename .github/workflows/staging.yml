@@ -25,6 +25,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
 #  run_tests:
 #    # Job that run the unit tests
 #    name: Run Tests
