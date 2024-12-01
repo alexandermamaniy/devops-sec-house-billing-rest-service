@@ -24,7 +24,7 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v4.0.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 #  run_tests:
 #    # Job that run the unit tests
 #    name: Run Tests
