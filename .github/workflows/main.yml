@@ -32,6 +32,4 @@ jobs:
           END
       - name: Run deploy
         run: |
-          ls
-
-#          ssh target "cd ccp-hotel-coupon-deploy/ && docker-compose -f docker-compose.production.yml down && docker pull x23329823/hotelcoupon_web:latest && docker-compose -f docker-compose.production.yml up -d --force-recreate"
+          ssh target "cd devops-sec-house-billing-app-deploy && ./update_django_service.sh"
