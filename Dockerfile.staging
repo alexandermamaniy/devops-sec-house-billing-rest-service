@@ -1,49 +1,51 @@
-FROM python:3.9
+    FROM python:3.9
 
-# Expose the port the app runs on
-EXPOSE 8000
+    # Expose the port the app runs on
+    EXPOSE 8000
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+    # Set environment variables
+    ENV PYTHONDONTWRITEBYTECODE 1
+    ENV PYTHONUNBUFFERED 1
 
-# Install system dependencies
-RUN apt-get update && \
-    apt-get install -y default-mysql-client build-essential
+    # Install system dependencies
+    RUN apt-get update && \
+        apt-get install -y default-mysql-client build-essential
 
-# Create user runner
-RUN useradd -m billinguser
+    # Create user runner
+    RUN useradd -m billinguser
 
-USER root
-ARG STAGING_BRANCH_NAME
-RUN echo ${STAGING_BRANCH_NAME}
-RUN git clone -b $STAGING_BRANCH_NAME https://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@github.com/alexandermamaniyucra/devops-sec-house-billing-rest-service.git
+    USER root
+    ARG STAGING_BRANCH_NAME
+    ARG TOKEN_GITHUB
 
-# Create and set working directory
-RUN mkdir -p /devops-sec-house-billing-rest-service/static
+    RUN echo ${STAGING_BRANCH_NAME}
+    RUN git clone -b $STAGING_BRANCH_NAME https://$TOKEN_GITHUB@github.com/alexandermamaniyucra/devops-sec-house-billing-rest-service.git
 
-
-WORKDIR /devops-sec-house-billing-rest-service
-
-# Set woking directory permisions
-RUN chmod -R 775 /devops-sec-house-billing-rest-service/static
-RUN chown -R billinguser:billinguser /devops-sec-house-billing-rest-service
+    # Create and set working directory
+    RUN mkdir -p /devops-sec-house-billing-rest-service/static
 
 
-# Install Python dependencies
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
-RUN pip install gunicorn psycopg2-binary
+    WORKDIR /devops-sec-house-billing-rest-service
 
-# Specify the user to run the container
-USER billinguser
-
-# Set variable environment to run app
-ENV DJANGO_SETTINGS_MODULE billbuddy.settings.staging
-ENV DJANGO_ENV staging
+    # Set woking directory permisions
+    RUN chmod -R 775 /devops-sec-house-billing-rest-service/static
+    RUN chown -R billinguser:billinguser /devops-sec-house-billing-rest-service
 
 
-# Collect static files
-# RUN python manage.py collectstatic --noinput
+    # Install Python dependencies
+    RUN pip install --upgrade pip && \
+        pip install -r requirements.txt
+    RUN pip install gunicorn psycopg2-binary
 
-CMD python -m gunicorn --workers 3 --bind 0.0.0.0:8000 billbuddy.wsgi
+    # Specify the user to run the container
+    USER billinguser
+
+    # Set variable environment to run app
+    ENV DJANGO_SETTINGS_MODULE billbuddy.settings.staging
+    ENV DJANGO_ENV staging
+
+
+    # Collect static files
+    # RUN python manage.py collectstatic --noinput
+
+    CMD python -m gunicorn --workers 3 --bind 0.0.0.0:8000 billbuddy.wsgi
