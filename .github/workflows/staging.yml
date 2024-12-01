@@ -1,7 +1,7 @@
 name: Build release Docker image
 
 on:
-  # Trigger the action manually from the UI
+  # Trigger the action manually from the U
   workflow_dispatch:
   # Trigger the action when I create or push a `release/**` branch
   push:
