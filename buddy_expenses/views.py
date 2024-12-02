@@ -4,13 +4,19 @@ from django.db.models import Q
 
 from buddy_expenses.models import BuddyExpense, SettlementByParticipants
 from buddy_expenses.serializers import BuddyExpenseSerializer, BuddyExpenseCreateSerializer, \
-    SettleParticipantExpenseUpSerializer
+    SettleParticipantExpenseUpSerializer, SettleParticipantExpenseUpListSerializer
 from rest_framework.permissions import IsAuthenticated
 from django.utils import timezone
 from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema
 
 from buddy_profiles.models import BuddyProfile
+
+
+class BuddySettleUpParticipantPostView(CreateAPIView):
+    serializer_class = SettleParticipantExpenseUpSerializer
+    permission_classes = [IsAuthenticated]
+
 
 
 class BuddyExpenseListCreateView(generics.ListCreateAPIView):
@@ -105,7 +111,7 @@ class CreateExpenseOfUserAuthenticated(CreateAPIView):
         return super().post(request, *args, **kwargs)
 
 class BuddySettleUpOfExpensesListAPIView(ListAPIView):
-    serializer_class = SettleParticipantExpenseUpSerializer
+    serializer_class = SettleParticipantExpenseUpListSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):

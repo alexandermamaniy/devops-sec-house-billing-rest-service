@@ -71,7 +71,6 @@ class SettlementByParticipants(TimeStampedModel):
 
     amount_payment = models.DecimalField(verbose_name='Amount payment', max_digits=8, decimal_places=3, default=0)
 
-
     def __str__(self):
         return f'{self.who_settle_simple_payment_up.full_name} - {self.what_expense_belong.title}'
 

@@ -3,16 +3,24 @@ from rest_framework import serializers
 from buddy_expenses.models import BuddyExpense, PaymentsMadeItByPayers, SettlementByParticipants, ParticipantsOfExpensePayment
 from buddy_groups.admin import buddy_members_inline
 from buddy_profiles.models import BuddyProfile
+from buddy_profiles.serializers import BuddyProfileSerializer
+
 
 class PayerPaymentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = PaymentsMadeItByPayers
         fields = ['who_do_simple_payment', 'amount_payment']
 
+
 class SettleParticipantExpenseUpSerializer(serializers.ModelSerializer):
     class Meta:
         model = SettlementByParticipants
-        fields = ['who_settle_simple_payment_up', 'amount_payment']
+        fields = ['who_settle_simple_payment_up', 'what_expense_belong','amount_payment']
+
+    def create(self, validated_data):
+        settle_up = SettlementByParticipants.objects.create(**validated_data)
+        return settle_up
+
 
 class ParticipantsOfExpensePaymentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -73,6 +81,12 @@ class BuddyExpenseSerializer(serializers.ModelSerializer):
     #
     #     return  instance
 
+class SettleParticipantExpenseUpListSerializer(serializers.ModelSerializer):
+    what_expense_belong = BuddyExpenseSerializer(required=False)
+    who_settle_simple_payment_up = BuddyProfileSerializer(required=False)
+    class Meta:
+        model = SettlementByParticipants
+        fields = ['who_settle_simple_payment_up', 'what_expense_belong','amount_payment', 'created_date']
 
 
 class BuddyExpenseCreateSerializer(serializers.ModelSerializer):
