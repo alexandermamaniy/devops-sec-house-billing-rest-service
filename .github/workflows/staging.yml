@@ -69,6 +69,7 @@ jobs:
     name: Build house billing Docker Image and then publish it to docker hub registry
 
 #    needs: run_tests
+    needs: sonarqube
     # Runner to use
     runs-on: ubuntu-latest
 
