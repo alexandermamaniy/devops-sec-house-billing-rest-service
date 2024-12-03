@@ -1,4 +1,3 @@
-# buddy_profiles/middleware.py
 from django.utils import timezone
 from pytz import timezone as pytz_timezone
 from django.utils.deprecation import MiddlewareMixin

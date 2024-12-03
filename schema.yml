@@ -1,0 +1,1117 @@
+openapi: 3.0.3
+info:
+  title: ''
+  version: 0.0.0
+paths:
+  /api/buddy-expenses/:
+    get:
+      operationId: buddy_expenses_list
+      tags:
+      - buddy-expenses
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BuddyExpense'
+          description: ''
+    post:
+      operationId: buddy_expenses_create
+      tags:
+      - buddy-expenses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExpenseRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ExpenseRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ExpenseRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuddyExpense'
+          description: ''
+  /api/buddy-expenses/{id}/:
+    get:
+      operationId: buddy_expenses_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - buddy-expenses
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuddyExpense'
+          description: ''
+    put:
+      operationId: buddy_expenses_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - buddy-expenses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuddyExpense'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BuddyExpense'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BuddyExpense'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuddyExpense'
+          description: ''
+    patch:
+      operationId: buddy_expenses_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - buddy-expenses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBuddyExpense'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBuddyExpense'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBuddyExpense'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuddyExpense'
+          description: ''
+    delete:
+      operationId: buddy_expenses_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - buddy-expenses
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/buddy-groups/:
+    get:
+      operationId: buddy_groups_list
+      tags:
+      - buddy-groups
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BuddyGroup'
+          description: ''
+    post:
+      operationId: buddy_groups_create
+      tags:
+      - buddy-groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuddyGroupRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BuddyGroupRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BuddyGroupRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuddyGroup'
+          description: ''
+  /api/buddy-groups/{id}/:
+    get:
+      operationId: buddy_groups_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - buddy-groups
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuddyGroup'
+          description: ''
+    put:
+      operationId: buddy_groups_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - buddy-groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuddyGroupRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BuddyGroupRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BuddyGroupRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuddyGroup'
+          description: ''
+    patch:
+      operationId: buddy_groups_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - buddy-groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBuddyGroupRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBuddyGroupRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBuddyGroupRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuddyGroup'
+          description: ''
+    delete:
+      operationId: buddy_groups_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - buddy-groups
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/buddy-profiles/:
+    get:
+      operationId: buddy_profiles_list
+      tags:
+      - buddy-profiles
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BuddyProfile'
+          description: ''
+    post:
+      operationId: buddy_profiles_create
+      tags:
+      - buddy-profiles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuddyProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BuddyProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BuddyProfile'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuddyProfile'
+          description: ''
+  /api/buddy-profiles/{id}/:
+    get:
+      operationId: buddy_profiles_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - buddy-profiles
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuddyProfile'
+          description: ''
+    put:
+      operationId: buddy_profiles_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - buddy-profiles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuddyProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BuddyProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BuddyProfile'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuddyProfile'
+          description: ''
+    patch:
+      operationId: buddy_profiles_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - buddy-profiles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBuddyProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBuddyProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBuddyProfile'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuddyProfile'
+          description: ''
+    delete:
+      operationId: buddy_profiles_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - buddy-profiles
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/schema/:
+    get:
+      operationId: schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - schema
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/token/:
+    post:
+      operationId: token_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /api/token/refresh/:
+    post:
+      operationId: token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /api/token/verify/:
+    post:
+      operationId: token_verify_create
+      description: |-
+        Takes a token and indicates if it is valid.  This view provides no
+        information about a token's fitness for a particular use.
+      tags:
+      - token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenVerify'
+          description: ''
+components:
+  schemas:
+    BuddyExpense:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+        buddy_group:
+          type: string
+          format: uuid
+        description:
+          type: string
+          maxLength: 255
+        total_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,5}(?:\.\d{0,3})?$
+        currency:
+          allOf:
+          - $ref: '#/components/schemas/CurrencyEnum'
+          title: Currencies
+        type_payment_distribution:
+          allOf:
+          - $ref: '#/components/schemas/TypePaymentDistributionEnum'
+          title: Type of distribution for payments of expenses
+        evicende_picture_url:
+          type: string
+          format: uri
+          nullable: true
+        payers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PayerPayments'
+          readOnly: true
+        settlement_by_participants:
+          type: array
+          items:
+            $ref: '#/components/schemas/SettleParticipantExpenseUp'
+          readOnly: true
+        participants_of_expense_payment:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParticipantsOfExpensePayment'
+          readOnly: true
+      required:
+      - buddy_group
+      - id
+      - participants_of_expense_payment
+      - payers
+      - settlement_by_participants
+      - title
+    BuddyGroup:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          title: Group name
+          maxLength: 255
+        group_members:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupMembers'
+          readOnly: true
+        group_admins:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupAdmins'
+          readOnly: true
+      required:
+      - group_admins
+      - group_members
+      - id
+      - name
+    BuddyGroupRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the buddy group
+          maxLength: 255
+        group_members:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of member IDs
+        group_admins:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of admin IDs
+      required:
+      - group_admins
+      - group_members
+      - name
+    BuddyProfile:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        user:
+          $ref: '#/components/schemas/User'
+        full_name:
+          type: string
+          title: Fullname
+          maxLength: 255
+        picture_url:
+          type: string
+          format: uri
+          nullable: true
+        created_date:
+          type: string
+          format: date-time
+        modified_date:
+          type: string
+          format: date-time
+          readOnly: true
+        deleted_date:
+          type: string
+          format: date-time
+          nullable: true
+        is_active:
+          type: boolean
+      required:
+      - id
+      - modified_date
+      - user
+    CurrencyEnum:
+      enum:
+      - EUR
+      - USD
+      type: string
+      description: |-
+        * `EUR` - EUR
+        * `USD` - USD
+    ExpenseRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the expense
+          maxLength: 255
+        buddy_group:
+          type: string
+          format: uuid
+          description: ID of the buddy group
+        description:
+          type: string
+          description: Description of the expense
+          maxLength: 255
+        total_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,5}(?:\.\d{0,3})?$
+          description: Total amount of the expense
+        currency:
+          allOf:
+          - $ref: '#/components/schemas/CurrencyEnum'
+          description: |-
+            Currency of the expense
+
+            * `EUR` - EUR
+            * `USD` - USD
+        type_payment_distribution:
+          allOf:
+          - $ref: '#/components/schemas/TypePaymentDistributionEnum'
+          description: |-
+            Type of payment distribution
+
+            * `EQUALLY` - EQ
+            * `UNEQUALLY` - UNEQ
+            * `PERCENTAGE` - PER
+        evicende_picture_url:
+          type: string
+          format: uri
+          description: URL of the evidence picture
+        payers:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of payer IDs
+        settlement_by_participants:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of participant IDs
+        participants_of_expense_payment:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of participant of expense payment IDs
+      required:
+      - buddy_group
+      - currency
+      - participants_of_expense_payment
+      - payers
+      - settlement_by_participants
+      - title
+      - total_amount
+      - type_payment_distribution
+    GroupAdmins:
+      type: object
+      properties:
+        buddy_profile_admin:
+          type: string
+          format: uuid
+        group_belong_to:
+          type: string
+          format: uuid
+        is_admin_a_member:
+          type: boolean
+      required:
+      - buddy_profile_admin
+      - group_belong_to
+    GroupMembers:
+      type: object
+      properties:
+        buddy_profile_member:
+          type: string
+          format: uuid
+        group_belong_to:
+          type: string
+          format: uuid
+      required:
+      - buddy_profile_member
+      - group_belong_to
+    ParticipantsOfExpensePayment:
+      type: object
+      properties:
+        group_member:
+          type: string
+          format: uuid
+        expense:
+          type: string
+          format: uuid
+        percentage_to_pay:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        amount_to_pay:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,5}(?:\.\d{0,3})?$
+        payment_balance:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,5}(?:\.\d{0,3})?$
+      required:
+      - expense
+      - group_member
+      - percentage_to_pay
+    PatchedBuddyExpense:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+        buddy_group:
+          type: string
+          format: uuid
+        description:
+          type: string
+          maxLength: 255
+        total_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,5}(?:\.\d{0,3})?$
+        currency:
+          allOf:
+          - $ref: '#/components/schemas/CurrencyEnum'
+          title: Currencies
+        type_payment_distribution:
+          allOf:
+          - $ref: '#/components/schemas/TypePaymentDistributionEnum'
+          title: Type of distribution for payments of expenses
+        evicende_picture_url:
+          type: string
+          format: uri
+          nullable: true
+        payers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PayerPayments'
+          readOnly: true
+        settlement_by_participants:
+          type: array
+          items:
+            $ref: '#/components/schemas/SettleParticipantExpenseUp'
+          readOnly: true
+        participants_of_expense_payment:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParticipantsOfExpensePayment'
+          readOnly: true
+    PatchedBuddyGroupRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the buddy group
+          maxLength: 255
+        group_members:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of member IDs
+        group_admins:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of admin IDs
+    PatchedBuddyProfile:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        user:
+          $ref: '#/components/schemas/User'
+        full_name:
+          type: string
+          title: Fullname
+          maxLength: 255
+        picture_url:
+          type: string
+          format: uri
+          nullable: true
+        created_date:
+          type: string
+          format: date-time
+        modified_date:
+          type: string
+          format: date-time
+          readOnly: true
+        deleted_date:
+          type: string
+          format: date-time
+          nullable: true
+        is_active:
+          type: boolean
+    PayerPayments:
+      type: object
+      properties:
+        who_do_simple_payment:
+          type: string
+          format: uuid
+        amount_payment:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,5}(?:\.\d{0,3})?$
+      required:
+      - who_do_simple_payment
+    SettleParticipantExpenseUp:
+      type: object
+      properties:
+        who_settle_simple_payment_up:
+          type: string
+          format: uuid
+        amount_payment:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,5}(?:\.\d{0,3})?$
+      required:
+      - who_settle_simple_payment_up
+    TokenObtainPair:
+      type: object
+      properties:
+        email:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - email
+      - password
+      - refresh
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          writeOnly: true
+      required:
+      - access
+      - refresh
+    TokenVerify:
+      type: object
+      properties:
+        token:
+          type: string
+          writeOnly: true
+      required:
+      - token
+    TypePaymentDistributionEnum:
+      enum:
+      - EQUALLY
+      - UNEQUALLY
+      - PERCENTAGE
+      type: string
+      description: |-
+        * `EQUALLY` - EQ
+        * `UNEQUALLY` - UNEQ
+        * `PERCENTAGE` - PER
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          maxLength: 255
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+        is_active:
+          type: boolean
+        is_staff:
+          type: boolean
+      required:
+      - email
+      - id
+      - password
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

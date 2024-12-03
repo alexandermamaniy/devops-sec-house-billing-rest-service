@@ -1,7 +1,4 @@
-
 from rest_framework import serializers
-from tutorial.quickstart.serializers import GroupSerializer
-
 from buddy_groups.models import BuddyGroup, GroupMembers, GroupAdmins
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
 from buddy_profiles.models import BuddyProfile

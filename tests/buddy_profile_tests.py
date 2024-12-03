@@ -47,7 +47,6 @@ class TestBuddyProfileCRUD:
         admin = BuddyProfileFactory()
         group = BuddyGroupFactory(group_members=[member1, member2], group_admins=[admin])
 
-        # Authenticate the API client
         api_client.force_authenticate(user=admin.user)
 
         # Make a GET request to the view

@@ -1,9 +1,7 @@
-from rest_framework import generics, status
-from rest_framework.generics import RetrieveAPIView, CreateAPIView
-
+from rest_framework import generics
+from rest_framework.generics import RetrieveAPIView
 from buddy_profiles.models import BuddyProfile
 from buddy_profiles.serializers import BuddyProfileSerializer, BuddyMemberOfAGroupRetrieveSerializer
-from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
@@ -28,8 +26,6 @@ class RetrieveMemberAndAdminsOfAGroupAPIView(RetrieveAPIView):
 
 
     def get_object(self):
-        #Validate that user authenticated must be an admin of the group
-        # user_authenticated = BuddyProfile.objects.get(user=self.request.user)
         group_id = self.kwargs.get('pk')
         members_of_group = BuddyProfile.objects.filter(group_members__id=group_id)
         admins_of_group = BuddyProfile.objects.filter(group_admins__id=group_id)
@@ -39,13 +35,6 @@ class RetrieveMemberAndAdminsOfAGroupAPIView(RetrieveAPIView):
         return obj
 
     def retrieve(self, request, *args, **kwargs):
-        # Get the model instance
         queryset = self.get_object()
-
-        # Instantiate the serializer
         serializer = self.get_serializer(queryset, context={'request': request})
-
-        # serializer = BuddyGroupRetrieveRequestSerializer(queryset, context={'request': request})
-
-        # Return the serialized data
         return Response(serializer.data)
