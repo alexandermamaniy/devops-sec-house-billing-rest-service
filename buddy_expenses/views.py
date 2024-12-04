@@ -1,15 +1,11 @@
-from rest_framework import generics, status
 from rest_framework.generics import ListAPIView, CreateAPIView
 from django.db.models import Q
-
 from buddy_expenses.models import BuddyExpense, SettlementByParticipants
 from buddy_expenses.serializers import BuddyExpenseSerializer, BuddyExpenseCreateSerializer, \
     SettleParticipantExpenseUpSerializer, SettleParticipantExpenseUpListSerializer
 from rest_framework.permissions import IsAuthenticated
-from django.utils import timezone
 from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema
-
 from buddy_profiles.models import BuddyProfile
 
 

@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import BuddyExpensesOfOneProfileListAPIView, BuddyExpensesOfOneGroupListAPIView, CreateExpenseOfUserAuthenticated, BuddySettleUpOfExpensesListAPIView, BuddySettleUpParticipantPostView
 
+app_name = "buddy_expenses"
+
 urlpatterns = [
     path('buddy-expenses/me', BuddyExpensesOfOneProfileListAPIView.as_view(), name='buddy-expenses-profile'),
     path('buddy-expenses/group/<uuid:pk>', BuddyExpensesOfOneGroupListAPIView.as_view(), name='buddy-expenses-group'),
