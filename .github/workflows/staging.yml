@@ -13,7 +13,44 @@ env:
   DOCKER_REGISTRY_URL: x23329823
 
 jobs:
+
+  run_tests:
+    # Job that run the unit tests
+    name: Run Tests
+    # Runner to use
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.9"
+
+#      - name: Get the branch name
+#        id: strip-branch-name-staging-to-clone-project
+#        run: staging_branch_name=$(echo "${{ github.ref }}" | sed 's|refs/heads/||') && echo "Building staging branch name $staging_branch_name" && echo "STAGING_BRANCH_NAME=$staging_branch_name" >> $GITHUB_ENV
+#
+#      - name: Clone the last version of the $STAGING_BRANCH_NAME branch
+#        run: git clone -b $STAGING_BRANCH_NAME https://${{ secrets.TOKEN_GITHUB }}@github.com/alexandermamaniyucra/ccp-hotel-coupon-backend.git
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Configure the testing environment variables
+        run: |
+          echo "DJANGO_SETTINGS_MODULE=billbuddy.settings.testing" >> $GITHUB_ENV
+          echo "DJANGO_ENV=testing" >> $GITHUB_ENV
+
+      - name: Execute the tests
+        run: pytest --cov --cov-report=xml
   sonarqube:
+    needs: run_tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,43 +62,6 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-#  run_tests:
-#    # Job that run the unit tests
-#    name: Run Tests
-#    # Runner to use
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#
-#      - uses: actions/checkout@v4
-#      - name: Set up Python 3.9
-#        uses: actions/setup-python@v3
-#        with:
-#          python-version: "3.9"
-#
-#      - name: Get the branch name
-#        id: strip-branch-name-staging-to-clone-project
-#        run: staging_branch_name=$(echo "${{ github.ref }}" | sed 's|refs/heads/||') && echo "Building staging branch name $staging_branch_name" && echo "STAGING_BRANCH_NAME=$staging_branch_name" >> $GITHUB_ENV
-#
-#      - name: Clone the last version of the $STAGING_BRANCH_NAME branch
-#        run: git clone -b $STAGING_BRANCH_NAME https://${{ secrets.TOKEN_GITHUB }}@github.com/alexandermamaniyucra/ccp-hotel-coupon-backend.git
-#
-#      - name: Install dependencies
-#        run: |
-#          cd ccp-hotel-coupon-backend
-#          python -m pip install --upgrade pip
-#          pip install -r requirements.txt
-#          pip install -i https://test.pypi.org/simple/ hotel-coupon-app-package-alexandermamani
-#
-#      - name: Configure the testing environment variables
-#        run: |
-#          echo "DJANGO_SETTINGS_MODULE=hotelcoupon.settings.testing" >> $GITHUB_ENV
-#          echo "DJANGO_ENV=testing" >> $GITHUB_ENV
-#
-#      - name: Execute the tests
-#        run: python manage.py test users.tests
 
   build_docker_images:
     # Job name that shows in the GitHub UI
