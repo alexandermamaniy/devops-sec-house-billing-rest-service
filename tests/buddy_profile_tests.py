@@ -1,6 +1,8 @@
 import pytest
 from django.urls import reverse
 from .factories import BuddyProfileFactory, BuddyGroupFactory
+from faker import Faker
+fake = Faker()
 
 pytestmark = pytest.mark.django_db
 
@@ -11,7 +13,7 @@ class TestBuddyProfileCRUD:
         data = {
                   "user": {
                     "email": "user1@user.com",
-                    "password": "user"
+                    "password": fake.password()
                   },
                   "full_name": "user1"
                 }
