@@ -1,6 +1,6 @@
 import pytest
 from django.urls import reverse
-from .factories import BuddyProfileFactory, BuddyGroupFactory
+from .factories_models_tests import BuddyProfileFactory, BuddyGroupFactory
 
 pytestmark = pytest.mark.django_db
 

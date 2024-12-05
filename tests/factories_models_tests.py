@@ -57,7 +57,7 @@ class BuddyExpenseFactory(factory.django.DjangoModelFactory):
         model = BuddyExpense
 
     title = fake.sentence()
-    buddy_group = factory.SubFactory('tests.factories.BuddyGroupFactory')
+    buddy_group = factory.SubFactory('tests.factories_models_tests.BuddyGroupFactory')
     description = fake.text()
     total_amount = fake.pydecimal(left_digits=3, right_digits=2, positive=True)
     currency = BuddyExpense.Currency.EUR

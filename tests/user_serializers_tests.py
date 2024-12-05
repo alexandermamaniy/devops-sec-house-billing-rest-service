@@ -1,14 +1,22 @@
 import pytest
 from users.models import User
 from users.serializers import UserSerializer
+from faker import Faker
 
+fake = Faker()
 @pytest.mark.django_db
 class TestUserSerializer:
 
     def test_create_user(self):
+        self.fake_member_email = fake.email()
+        self.fake_member_password = fake.password()
+
+        self.fake_member_updated_email = fake.email()
+        self.fake_member_updated_password = fake.password()
+
         data = {
-            'email': 'testuser@example.com',
-            'password': 'testpassword123',
+            'email': self.fake_member_email,
+            'password': self.fake_member_password ,
             'is_active': True,
             'timezone': 'UTC'
         }
@@ -21,10 +29,16 @@ class TestUserSerializer:
         assert user.timezone == data['timezone']
 
     def test_update_user(self):
-        user = User.objects.create_user(email='testuser@example.com', password='testpassword123')
+        self.fake_member_email = fake.email()
+        self.fake_member_password = fake.password()
+
+        self.fake_member_updated_email = fake.email()
+        self.fake_member_updated_password = fake.password()
+
+        user = User.objects.create_user(email=self.fake_member_email, password=self.fake_member_password )
         data = {
-            'email': 'updateduser@example.com',
-            'password': 'newpassword123',
+            'email': self.fake_member_updated_email ,
+            'password': self.fake_member_updated_password,
             'is_active': False,
             'timezone': 'Europe/London'
         }

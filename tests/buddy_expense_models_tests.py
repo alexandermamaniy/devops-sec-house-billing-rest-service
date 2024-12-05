@@ -3,11 +3,14 @@ from buddy_expenses.models import BuddyExpense, ParticipantsOfExpensePayment, Pa
 from buddy_profiles.models import BuddyProfile
 from buddy_groups.models import BuddyGroup
 from django.contrib.auth import get_user_model
+from faker import Faker
 
+fake = Faker()
 User = get_user_model()
 
 @pytest.mark.django_db
 class TestBuddyExpenseModel:
+
 
     def test_create_buddy_expense(self):
         group = BuddyGroup.objects.create(name='Test Group')
@@ -22,7 +25,10 @@ class TestBuddyExpenseModel:
         assert buddy_expense.total_amount == 100.00
 
     def test_add_participant_to_expense(self):
-        user = User.objects.create_user(email='participant@example.com', password='password123')
+        self.fake_email = fake.email()
+        self.fake_participant_password = fake.password()
+
+        user = User.objects.create_user(email=self.fake_email, password=self.fake_participant_password)
         participant = BuddyProfile.objects.create(full_name='Participant', user=user)
         group = BuddyGroup.objects.create(name='Test Group')
         buddy_expense = BuddyExpense.objects.create(
@@ -42,7 +48,9 @@ class TestBuddyExpenseModel:
         assert buddy_expense.participants_of_expense_payment.count() == 1
 
     def test_add_payment_to_expense(self):
-        user = User.objects.create_user(email='payer@example.com', password='password123')
+        self.fake_email = fake.email()
+        self.fake_payer_password = fake.password()
+        user = User.objects.create_user(email=self.fake_email, password=self.fake_payer_password)
         payer = BuddyProfile.objects.create(full_name='Payer', user=user)
         group = BuddyGroup.objects.create(name='Test Group')
         buddy_expense = BuddyExpense.objects.create(
@@ -60,7 +68,9 @@ class TestBuddyExpenseModel:
         assert buddy_expense.payments_made_it_by_payers.count() == 1
 
     def test_settle_participant_expense(self):
-        user = User.objects.create_user(email='settler@example.com', password='password123')
+        self.fake_email= fake.email()
+        self.fake_settlet_password = fake.password()
+        user = User.objects.create_user(email=self.fake_email, password=self.fake_settlet_password)
         settler = BuddyProfile.objects.create(full_name='Settler', user=user)
         group = BuddyGroup.objects.create(name='Test Group')
         buddy_expense = BuddyExpense.objects.create(

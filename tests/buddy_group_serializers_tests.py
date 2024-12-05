@@ -3,15 +3,23 @@ from django.contrib.auth import get_user_model
 from buddy_groups.models import BuddyGroup, GroupMembers, GroupAdmins
 from buddy_groups.serializers import BuddyGroupSerializer
 from buddy_profiles.models import BuddyProfile
+from faker import Faker
 
+fake = Faker()
 User = get_user_model()
 
 @pytest.mark.django_db
 class TestBuddyGroupSerializer:
 
     def test_create_buddy_group(self):
-        user_member = User.objects.create_user(email='member@example.com', password='password123')
-        user_admin = User.objects.create_user(email='admin@example.com', password='password123')
+        self.fake_member_email = fake.email()
+        self.fake_admin_email = fake.email()
+
+        self.fake_admin_password = fake.password()
+        self.fake_member_password = fake.password()
+
+        user_member = User.objects.create_user(email=self.fake_member_email, password=self.fake_member_password)
+        user_admin = User.objects.create_user(email=self.fake_admin_email, password=self.fake_admin_password)
         member = BuddyProfile.objects.create(full_name='Member', user=user_member)
         admin = BuddyProfile.objects.create(full_name='Admin', user=user_admin)
         data = {
@@ -28,8 +36,13 @@ class TestBuddyGroupSerializer:
         assert buddy_group.groupadmins_set.count() == 1
 
     def test_update_buddy_group(self):
-        user_member = User.objects.create_user(email='member@example.com', password='password123')
-        user_admin = User.objects.create_user(email='admin@example.com', password='password123')
+        self.fake_member_email = fake.email()
+        self.fake_admin_email = fake.email()
+
+        self.fake_admin_password = fake.password()
+        self.fake_member_password = fake.password()
+        user_member = User.objects.create_user(email=self.fake_member_email, password='password123')
+        user_admin = User.objects.create_user(email=self.fake_admin_email, password=self.fake_admin_password)
         buddy_group = BuddyGroup.objects.create(name='Test Group')
         member = BuddyProfile.objects.create(full_name='Member', user=user_member)
         admin = BuddyProfile.objects.create(full_name='Admin', user=user_admin)

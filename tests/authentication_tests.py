@@ -10,20 +10,23 @@ fake = Faker()
 class JwtTestCase(APITestCase):
 
     def setUp(self):
-        self.admin_password = fake.password()
+        self.admin_email = fake.email()
+        self.user_email = fake.email()
+
         self.user_password = fake.password()
+        self.admin_password = fake.password()
 
         # set url JWT
         self.url = reverse("token_obtain_pair")
         # create superuser
-        self.superuser = User.objects.create_superuser(email='admin@admin.com', password=self.admin_password)
+        self.superuser = User.objects.create_superuser(email=self.admin_email, password=self.admin_password)
         self.superuser.save()
         # create user
-        self.user = User.objects.create_user(email='user@user.com', password=self.user_password)
+        self.user = User.objects.create_user(email=self.user_email, password=self.user_password)
         self.user.save()
 
     def test_create_user(self):
-        user = User.objects.get(email='user@user.com')
+        user = User.objects.get(email=self.user_email)
         self.assertIsNotNone(user)
         self.assertEqual(self.user, user)
         self.assertNotEqual(user.password, self.user_password)
@@ -31,7 +34,7 @@ class JwtTestCase(APITestCase):
         self.assertFalse(user.is_superuser)
 
     def test_create_superuser(self):
-        superuser = User.objects.get( email='admin@admin.com')
+        superuser = User.objects.get( email=self.admin_email)
         self.assertIsNotNone(superuser)
         self.assertEqual(self.superuser, superuser)
         self.assertNotEqual(superuser.password, self.admin_password)
@@ -41,7 +44,7 @@ class JwtTestCase(APITestCase):
 
     def test_get_jwt(self):
         credentials = {
-                'email': 'admin@admin.com',
+                'email': self.admin_email,
                 'password': self.admin_password,
             }
         response = self.client.post( self.url, credentials, format="json")

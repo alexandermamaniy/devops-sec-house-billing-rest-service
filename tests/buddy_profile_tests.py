@@ -1,6 +1,6 @@
 import pytest
 from django.urls import reverse
-from .factories import BuddyProfileFactory, BuddyGroupFactory
+from .factories_models_tests import BuddyProfileFactory, BuddyGroupFactory
 from faker import Faker
 fake = Faker()
 
