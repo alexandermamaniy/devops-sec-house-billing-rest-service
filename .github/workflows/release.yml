@@ -6,7 +6,7 @@ on:
   # Trigger the action when I create or push a `release/**` branch
   push:
     branches:
-      - 'staging/**'
+      - 'release/**'
 
 env:
   DOCKER_IMAGE_NAME: house_billing_web_service
@@ -29,13 +29,6 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: "3.9"
-
-#      - name: Get the branch name
-#        id: strip-branch-name-staging-to-clone-project
-#        run: staging_branch_name=$(echo "${{ github.ref }}" | sed 's|refs/heads/||') && echo "Building staging branch name $staging_branch_name" && echo "STAGING_BRANCH_NAME=$staging_branch_name" >> $GITHUB_ENV
-#
-#      - name: Clone the last version of the $STAGING_BRANCH_NAME branch
-#        run: git clone -b $STAGING_BRANCH_NAME https://${{ secrets.TOKEN_GITHUB }}@github.com/alexandermamaniyucra/ccp-hotel-coupon-backend.git
 
       - name: Install dependencies
         run: |
@@ -78,7 +71,7 @@ jobs:
 
     - name: Get the branch name
       id: strip-branch-name-staging
-      run: staging_branch_name=$(echo "${{ github.ref }}" | sed 's|refs/heads/||') && echo "Building staging branch name $staging_branch_name" && echo "STAGING_BRANCH_NAME=$staging_branch_name" >> $GITHUB_ENV
+      run: staging_branch_name=$(echo "${{ github.ref }}" | sed 's|refs/heads/||') && echo "Building release branch name $staging_branch_name" && echo "STAGING_BRANCH_NAME=$staging_branch_name" >> $GITHUB_ENV
 
     - name: Get the release version
       # i.e.: release/1.0.0 -> 1.0.0
