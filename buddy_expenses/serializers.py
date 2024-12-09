@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from buddy_expenses.models import BuddyExpense, PaymentsMadeItByPayers, SettlementByParticipants, ParticipantsOfExpensePayment
-from buddy_groups.admin import buddy_members_inline
 from buddy_profiles.models import BuddyProfile
 from buddy_profiles.serializers import BuddyProfileSerializer
 
@@ -71,15 +70,6 @@ class BuddyExpenseSerializer(serializers.ModelSerializer):
                 payment_balance=participant_of_expense_payment_data['payment_balance']
             )
         return buddy_expense
-
-    # def update(self, instance, validated_data):
-    #     instance.name = validated_data.get('name', instance.name)
-    #     instance.paymentsmadeitbypayers_set = validated_data.get('payments_made_it_by_payers', instance.paymentsmadeitbypayers_set)
-    #     instance.settleparticipantexpenseup_set = validated_data.get('settlement_by_participants', instance.settleparticipantexpenseup_set)
-    #     instance.participantsofexpensepayment_set = validated_data.get('participants_of_expense_payment', instance.participantsofexpensepayment_set)
-    #     instance.save()
-    #
-    #     return  instance
 
 class SettleParticipantExpenseUpListSerializer(serializers.ModelSerializer):
     what_expense_belong = BuddyExpenseSerializer(required=False)
