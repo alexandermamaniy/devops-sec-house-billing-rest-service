@@ -12,10 +12,8 @@ class JwtTestCase(APITestCase):
     def setUp(self):
         self.admin_email = fake.email()
         self.user_email = fake.email()
-
         self.user_password = fake.password()
         self.admin_password = fake.password()
-
         # set url JWT
         self.url = reverse("token_obtain_pair")
         # create superuser
