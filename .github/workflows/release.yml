@@ -39,7 +39,11 @@ jobs:
         run: |
           echo "DJANGO_SETTINGS_MODULE=billbuddy.settings.testing" >> $GITHUB_ENV
           echo "DJANGO_ENV=testing" >> $GITHUB_ENV
-
+          echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> $GITHUB_ENV
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+          echo "DEBUG=${{ secrets.DEBUG }}" >> $GITHUB_ENV
+          echo "TESTING=${{ secrets.TESTING }}" >> $GITHUB_ENV
+          echo "ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }}" >> $GITHUB_ENV
       - name: Execute the tests
         run: pytest --cov --cov-report=xml
 #  sonarqube:
