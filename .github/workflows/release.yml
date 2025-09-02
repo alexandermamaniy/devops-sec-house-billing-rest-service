@@ -138,4 +138,4 @@ jobs:
           END
       - name: Run deploy
         run: |
-          ssh target "cd devops-sec-house-billing-app-deploy && ./update_django_service.sh"
+          ssh target "cd devops-sec-house-billing-app-deploy/ && docker compose -f docker-compose.staging.yml down && docker pull $DOCKER_REGISTRY_URL/$DOCKER_IMAGE_NAME:latest && docker compose -f docker-compose.staging.yml up -d --force-recreate"
