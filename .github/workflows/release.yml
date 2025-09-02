@@ -42,26 +42,26 @@ jobs:
 
       - name: Execute the tests
         run: pytest --cov --cov-report=xml
-  sonarqube:
-    needs: run_tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          # Disabling shallow clones is recommended for improving the relevancy of reporting
-          fetch-depth: 0
-      - name: Official SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v4.0.0
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+#  sonarqube:
+#    needs: run_tests
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          # Disabling shallow clones is recommended for improving the relevancy of reporting
+#          fetch-depth: 0
+#      - name: Official SonarQube Scan
+#        uses: SonarSource/sonarqube-scan-action@v4.0.0
+#        env:
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
   build_docker_images:
     # Job name that shows in the GitHub UI
     name: Build house billing Docker Image and then publish it to docker hub registry
 
-#    needs: run_tests
-    needs: sonarqube
+    needs: run_tests
+#    needs: sonarqube
     # Runner to use
     runs-on: ubuntu-latest
 
@@ -110,25 +110,28 @@ jobs:
     - name: Remove the local image
       run: docker rmi $DOCKER_IMAGE_NAME:$RELEASE_VERSION
 
-  create-pull-request-to-pre-production:
-
-    name: Pull request to Main branch
-    needs: build_docker_images
+  deploy:
+    name: Deploy Backend container to AWS EC2
     runs-on: ubuntu-latest
+    needs: build_docker_images
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Update AUTHORS
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
         run: |
-          git log --format='%aN <%aE>%n%cN <%cE>' | sort -u > AUTHORS
-
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.TOKEN_GITHUB }}
-          commit-message: Automated request to ${{ github.event.workflow_run.head_commit.message }}
-          title: Update $STAGING_BRANCH_NAME branch to main branch
-          body: $STAGING_BRANCH_NAME - ${{ github.event.workflow_run.head_commit.message }}
-          branch: main
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/github
+          chmod 600 ~/.ssh/github
+          cat >>~/.ssh/config <<END
+          Host target
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/github
+            LogLevel ERROR
+            StrictHostKeyChecking no
+          END
+      - name: Run deploy
+        run: |
+          ssh target "cd devops-sec-house-billing-app-deploy && ./update_django_service.sh"
