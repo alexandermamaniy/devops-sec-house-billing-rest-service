@@ -16,10 +16,9 @@
 
     USER root
     ARG STAGING_BRANCH_NAME
-    ARG TOKEN_GITHUB
 
     RUN echo ${STAGING_BRANCH_NAME}
-    RUN git clone -b $STAGING_BRANCH_NAME https://$TOKEN_GITHUB@github.com/alexandermamaniyucra/devops-sec-house-billing-rest-service.git
+    RUN git clone -b $STAGING_BRANCH_NAME https://github.com/alexandermamaniy/devops-sec-house-billing-rest-service.git
 
     # Create and set working directory
     RUN mkdir -p /devops-sec-house-billing-rest-service/static
