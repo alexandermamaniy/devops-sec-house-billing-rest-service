@@ -1,4 +1,4 @@
-# BillBuddy
+# House Billing REST Service
 Application to manage share bill in apartments and houses
 
 ## System Dependencies
@@ -7,8 +7,8 @@ Application to manage share bill in apartments and houses
 
 ## Project Download
 ```
-git clone https://github.com/alexandermamaniy/bill-buddy.git
-cd billbuddy/
+git clone https://github.com/alexandermamaniy/devops-sec-house-billing-rest-service.git
+cd devops-sec-house-billing-rest-service/
 ```
 
 ## Develop stage
@@ -25,6 +25,7 @@ MYSQL_ROOT_PASSWORD=rootpassword
 ```
 
 ### Executing the project with docker-compoose 
+
 ```
 docker-compose -f docker-compose.development.yml build
 docker-compose -f docker-compose.development.yml.yml up
